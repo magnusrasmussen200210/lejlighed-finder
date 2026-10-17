@@ -1,5 +1,6 @@
 """Tilpas master-ansøgningen til en konkret bolig."""
 import os
+import re
 from pathlib import Path
 
 AREA_SENTENCES = {
@@ -26,10 +27,12 @@ def render(address: str, area: str, details) -> str:
         bolig = f"Det betyder meget for os, at lejligheden har {' og '.join(extras)}, og den virker som et rigtig godt sted for os at starte vores fælles hjem."
     else:
         bolig = "Lejligheden virker som et rigtig godt sted for os at starte vores fælles hjem."
-    return (_template()
+    text = (_template()
             .replace("{adresse}", address)
             .replace("{omraade_saetning}", AREA_SENTENCES.get(area, AREA_SENTENCES["Aarhus C"]))
             .replace("{bolig_saetning}", bolig)
             .replace("{telefon}", os.environ.get("KONTAKT_TELEFON", "[telefon]"))
-            .replace("{email}", os.environ.get("KONTAKT_EMAIL", "[email]"))
-            .strip())
+            .replace("{email}", os.environ.get("KONTAKT_EMAIL", "[email]")))
+    # Sikkerhedsnet: en pladsholder der ikke blev udfyldt (fx stavet forkert) må aldrig nå en udlejer
+    text = re.sub(r"[^\n]*\{[^{}\n]*\}[^\n]*\n?", "", text)
+    return re.sub(r"\n{3,}", "\n\n", text).strip()

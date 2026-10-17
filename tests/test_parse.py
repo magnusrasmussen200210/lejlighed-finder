@@ -74,3 +74,19 @@ def test_senior():
 def test_propstep_total():
     d = parse("Økonomi Husleje 13.895,00 Varme 600,00 Vand 350,00 El Direkte afregning I alt pr. måned 14.845,00 Depositum 41.685,00")
     assert (d.rent, d.aconto) == (13895, 950)
+
+
+def test_application_has_no_placeholders(monkeypatch):
+    from finder.application import render
+    from finder.parse import Details
+    tpl = Path("/mnt/project-files/lejlighed/ansoegning-secret.txt")
+    if tpl.exists():
+        monkeypatch.setenv("ANSOEGNING", tpl.read_text())
+    monkeypatch.setenv("KONTAKT_TELEFON", "31180445")
+    monkeypatch.setenv("KONTAKT_EMAIL", "test@example.com")
+    for area in ("Trøjborg", "Frederiksbjerg", "Aarhus C"):
+        out = render("Åhusene 3, 2. 3, 8000 Aarhus C", area, Details(dishwasher=True))
+        assert "{" not in out and "}" not in out
+        assert "Åhusene 3" in out and "31180445" in out
+    monkeypatch.setenv("ANSOEGNING", "Hej {adresse}\n{stavet_forkert}\nHilsen")
+    assert render("X", "Aarhus C", Details()) == "Hej X\nHilsen"
