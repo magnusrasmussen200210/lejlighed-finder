@@ -63,6 +63,9 @@ def parse(text: str) -> Details:
         if 50 <= n <= 5000:
             acontos[m.group(1).lower() or "forbrug"] = n
     d.aconto = sum(acontos.values()) if acontos else None
+    m = re.search(r"i alt pr\.? m[åa]ned\s*:?\s*" + AMOUNT, t, re.I)
+    if d.aconto is None and d.rent and m and _num(m.group(1)) > d.rent:
+        d.aconto = _num(m.group(1)) - d.rent
 
     m = (re.search(r"(?:bolig)?areal(?:\s*\(m2\))?\s*:?\s*(\d{2,3})(?:[.,]\d+)?", t, re.I)
          or re.search(r"(\d{2,3})(?:[.,]\d+)?\s*(?:m2|m²|kvm)", t, re.I))

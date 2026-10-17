@@ -69,3 +69,8 @@ def test_senior():
     from finder.main import evaluate
     ok, *_ = evaluate("Teglgårdens virkeboliger - for lejere der er +50 år, 8000 Aarhus C, Husleje 8.000 kr, 2 vær., 60 m²")
     assert not ok
+
+
+def test_propstep_total():
+    d = parse("Økonomi Husleje 13.895,00 Varme 600,00 Vand 350,00 El Direkte afregning I alt pr. måned 14.845,00 Depositum 41.685,00")
+    assert (d.rent, d.aconto) == (13895, 950)

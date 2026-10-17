@@ -121,4 +121,28 @@ SITES = [
         link_re=r"ungdomsboligaarhus\.dk/lejemaal/\d+/",
         how_to_apply="Kræver en ansøgning hos UngdomsboligAarhus (begge skal være studerende).",
     ),
+    Site(
+        name="Henning Poulsen",
+        list_urls=["https://henning-poulsen.dk/ledige-lejemaal/"],
+        link_re=r"henning-poulsen\.dk/ledige-lejemaal/[^?#]+/?$",
+        how_to_apply="Søg via linket. Henning Poulsen kræver en bruger (Opret/Min side).",
+    ),
+    Site(
+        name="Dansk Administrationscenter",
+        list_urls=["https://dacas.dk/ledige-lejligheder/"],
+        link_re=r"dacas\.dk/lejlighed/[a-z0-9-]+/?$",
+        how_to_apply="Søg via linket.",
+    ),
+    Site(
+        name="Mogens de Linde",
+        list_urls=["https://www.delinde.dk/bolig"],
+        link_re=r"delinde\.dk/bolig/[a-z0-9-]+$",
+        how_to_apply="Søg via formularen på linket.",
+    ),
+    Site(
+        name="Propstep",
+        list_urls=["https://propstep.com/da-DK/rental-housing/aarhus"],
+        link_re=r"propstep\.com/da-DK/bolig/[0-9a-f]{24}-[a-z0-9-]+$",
+        how_to_apply="Søg via linket (\"Henvend dig her\"). Propstep kræver en gratis profil.",
+    ),
 ]

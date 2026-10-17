@@ -17,7 +17,9 @@ def _call(method, **params):
 
 def discover_chat_id() -> int | None:
     """Find chat-id ud fra den seneste besked nogen har skrevet til botten."""
+    me = _call("getMe")
     updates = _call("getUpdates", limit=100)
+    print(f"Telegram: bot @{me.get('username')}, {len(updates)} ventende beskeder")
     for u in reversed(updates):
         msg = u.get("message") or u.get("edited_message")
         if msg:
