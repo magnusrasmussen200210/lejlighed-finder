@@ -1,5 +1,6 @@
 """Udfyld og send udlejernes egne ansøgningsformularer med Playwright."""
 import os
+import re
 
 
 def contact():
@@ -64,12 +65,13 @@ async def ae_ejendom(page, url, text, submit):
     # feltet "website" er en fælde for spam-robotter og skal forblive tomt
     if not submit:
         return "udfyldt (ikke sendt)"
-    before = page.url
     await form.locator("[type=submit]").click()
     await page.wait_for_load_state("networkidle", timeout=20000)
     body = (await page.inner_text("body")).lower()
-    if "tak" in body or page.url != before:
+    if re.search(r"\btak for (din|jeres) (interesse|henvendelse|besked)|\bvi har modtaget", body):
         return "sendt"
+    if not await page.locator("form[action*='website-interests'] [name=note]").is_visible():
+        return "sendt (formularen forsvandt efter afsendelse)"
     raise RuntimeError("ingen kvittering efter afsendelse")
 
 
