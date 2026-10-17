@@ -74,10 +74,14 @@ class HenningPoulsen(Site):
         items = [x for v in data.values() if isinstance(v, list) for x in v]
         out = []
         for x in items:
+            if x.get("TenancyType") != "Lejligheder":
+                continue  # API'et indeholder også garager, p-pladser og erhverv
             a = x.get("Address") or {}
             url = urljoin("https://henning-poulsen.dk/", (x.get("Url") or "").replace("\\", "/"))
-            card = f"{a.get('Street', '')} {a.get('Location', '')}, {a.get('ZipCode', '')} {a.get('City', '')}"
-            out.append((url, card + " " + unquote(url)))
+            net, gross = int(x.get("RentNet") or 0), int(x.get("RentGross") or 0)
+            card = (f"{a.get('Street', '')} {a.get('Location', '')}, {a.get('ZipCode', '')} {a.get('City', '')} "
+                    f"Husleje {net} kr. Aconto {max(gross - net, 0)} kr. {int(x.get('Sqm') or 0)} m² {x.get('Rooms')} værelser")
+            out.append((url, card))
         return out
 
 
@@ -142,6 +146,7 @@ SITES = [
     ),
     HenningPoulsen(
         name="Henning Poulsen",
+        card_is_enough=True,
         list_urls=[],
         link_re="",
         how_to_apply="Søg via linket. Henning Poulsen kræver en bruger (Opret/Min side).",
