@@ -41,9 +41,16 @@ async def probe(browser, url):
             continue
         seen.add(href)
         print("LINK", href, "|", text.replace("\n", " "))
-    forms = await page.eval_on_selector_all("form", "els => els.map(f => [f.action, f.method, Array.from(f.elements).map(e => e.name||e.id||e.type).join(',')])")
+    forms = await page.eval_on_selector_all("form", """els => els.map(f => [f.action, f.method, Array.from(f.elements).map(e => {
+        const lab = (e.labels && e.labels[0] && e.labels[0].innerText) || e.placeholder || e.getAttribute('aria-label') || '';
+        const opts = e.tagName === 'SELECT' ? '{' + Array.from(e.options).slice(0, 8).map(o => o.value).join('/') + '}' : '';
+        return `${e.tagName.toLowerCase()}:${e.type}:${e.name||e.id}${e.required ? '*' : ''}[${lab.trim().slice(0, 40)}]${opts}`;
+    }).join(' | ')])""")
     for f in forms:
         print("FORM", f)
+    iframes = [f.url for f in page.frames if f.url and f.url != page.url]
+    if iframes:
+        print("IFRAMES", iframes[:10])
     for m, u, n, b in json_calls:
         print("JSON", m, u, n, b.replace("\n", " ")[:3000])
     text = await page.inner_text("body")
