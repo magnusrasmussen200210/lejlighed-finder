@@ -35,6 +35,7 @@ jobs:
           ANSOEGNING: ${{ secrets.ANSOEGNING }}
           KONTAKT_TELEFON: ${{ secrets.KONTAKT_TELEFON }}
           KONTAKT_EMAIL: ${{ secrets.KONTAKT_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
         run: python -m finder.main ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
       - name: Gem hvilke annoncer der er set
         if: always()

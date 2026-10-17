@@ -35,6 +35,7 @@ class Site:
     card_is_enough: bool = False
     prefilter: object = default_prefilter
     every: int = 1  # tjek kun hver n'te kørsel (for sider der blokerer hyppige besøg)
+    apply_email: bool = False  # udlejeren tager imod ansøgninger på mail til kontaktpersonen i annoncen
 
     def title(self, text, url):
         return first_line_title(text, url)
@@ -64,9 +65,26 @@ class Site:
         return out
 
 
+class HenningPoulsen(Site):
+    """Annoncerne hentes fra sidens eget API, fordi listen tegnes med JavaScript uden rigtige links."""
+
+    async def collect(self, page):
+        resp = await page.request.get("https://henning-poulsen.dk/umbraco/api/AvailableTenancy/GetAvailableTenancies")
+        data = (await resp.json())["Data"]
+        items = [x for v in data.values() if isinstance(v, list) for x in v]
+        out = []
+        for x in items:
+            a = x.get("Address") or {}
+            url = urljoin("https://henning-poulsen.dk/", (x.get("Url") or "").replace("\\", "/"))
+            card = f"{a.get('Street', '')} {a.get('Location', '')}, {a.get('ZipCode', '')} {a.get('City', '')}"
+            out.append((url, card + " " + unquote(url)))
+        return out
+
+
 SITES = [
     Site(
         name="Taurus",
+        apply_email=True,
         list_urls=["https://www.taurus.dk/boligudlejning/ledige-lejemal/"],
         link_re=r"taurus\.dk/boligudlejning/lejebolig\?id=\d+",
         how_to_apply="Søg via linket (Taurus' egen side).",
@@ -111,6 +129,7 @@ SITES = [
     ),
     Site(
         name="AE Ejendom",
+        apply_email=True,
         list_urls=["https://aeejendom.dk/ledige-lejemal?q=Aarhus%20C", "https://aeejendom.dk/ledige-lejemal?q=Aarhus%20N"],
         link_re=r"aeejendom\.dk/lejemaal/[a-z0-9-]+$",
         how_to_apply="Søg via linket.",
@@ -121,14 +140,15 @@ SITES = [
         link_re=r"ungdomsboligaarhus\.dk/lejemaal/\d+/",
         how_to_apply="Kræver en ansøgning hos UngdomsboligAarhus (begge skal være studerende).",
     ),
-    Site(
+    HenningPoulsen(
         name="Henning Poulsen",
-        list_urls=["https://henning-poulsen.dk/ledige-lejemaal/"],
-        link_re=r"henning-poulsen\.dk/ledige-lejemaal/[^?#]+/?$",
+        list_urls=[],
+        link_re="",
         how_to_apply="Søg via linket. Henning Poulsen kræver en bruger (Opret/Min side).",
     ),
     Site(
         name="Dansk Administrationscenter",
+        apply_email=True,
         list_urls=["https://dacas.dk/ledige-lejligheder/"],
         link_re=r"dacas\.dk/lejlighed/[a-z0-9-]+/?$",
         how_to_apply="Søg via linket.",

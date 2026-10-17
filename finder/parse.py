@@ -87,7 +87,7 @@ def parse(text: str) -> Details:
     m = re.search(r"tidsbegr[æa]ns\w*[^.\n]{0,60}?(\d{1,2})\s*(?:m[åa]ned|mdr)", t, re.I)
     if m:
         d.unlimited, d.limited_months = False, int(m.group(1))
-    elif re.search(r"lejeperiode\s*:?\s*ubegr[æa]nset|ubegr[æa]nset\s+lejem|tidsubegr[æa]nset", t, re.I):
+    elif re.search(r"tidsbegr[æa]nsning\s*:?\s*ingen|lejeperiode\s*:?\s*ubegr[æa]nset|ubegr[æa]nset\s+lejem|tidsubegr[æa]nset", t, re.I):
         d.unlimited = True
     elif re.search(r"tidsbegr[æa]nset", t, re.I):
         d.unlimited = False

@@ -90,3 +90,15 @@ def test_application_has_no_placeholders(monkeypatch):
         assert "Åhusene 3" in out and "31180445" in out
     monkeypatch.setenv("ANSOEGNING", "Hej {adresse}\n{stavet_forkert}\nHilsen")
     assert render("X", "Aarhus C", Details()) == "Hej X\nHilsen"
+
+
+def test_pick_recipient():
+    from finder.mailer import pick_recipient
+    assert pick_recipient("Kontakt Amanda arp@dacas.dk 60 38 Mail: dacas@dacas.dk") == "arp@dacas.dk"
+    assert pick_recipient("Kontakt aarhus@lejeboligmaegleren.dk") == "aarhus@lejeboligmaegleren.dk"
+    assert pick_recipient("Malthe Email: mkj@taurus.dk ... taurus@taurus.dk") == "mkj@taurus.dk"
+    assert pick_recipient("ingen mail her") is None
+
+
+def test_dac_unlimited():
+    assert parse("Tidsbegrænsning: Ingen Månedlig husleje: 8.250 kr. Månedlig aconto: 600 kr.").unlimited is True

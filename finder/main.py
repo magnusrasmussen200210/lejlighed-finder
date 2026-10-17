@@ -9,10 +9,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import unquote
 
-from . import telegram
+from . import mailer, telegram
 from .application import render
 from .areas import classify
-from .parse import parse
+from .parse import Details, parse
 from .sites import SITES
 
 STATE = Path(__file__).resolve().parent.parent / "state" / "seen.json"
@@ -20,13 +20,14 @@ MAX_TOTAL = 10_000
 MIN_ROOMS = 2
 MIN_SIZE = 45
 MIN_MONTHS = 12
+MAX_APPLY_PER_RUN = 5
 SENIOR = re.compile(r"\+\s?50\s?år|50\+|55\+|60\+|seniorbolig|seniorlejlighed|over 50 år", re.I)
 
 
 def load_state():
     if STATE.exists():
         return json.loads(STATE.read_text())
-    return {"seen": {}, "chat_id": None, "errors": {}}
+    return {"seen": {}, "chat_id": None, "errors": {}, "matches": {}}
 
 
 def save_state(state):
@@ -81,7 +82,7 @@ def fmt_kr(n):
     return f"{n:,}".replace(",", ".") + " kr"
 
 
-def message(site, url, title, area, d, flags, application):
+def message(site, url, title, area, d, flags, application, mail_to=None):
     prio = {1: "⭐⭐⭐", 2: "⭐⭐", 3: "⭐"}[area[0]]
     lines = [f"🏠 Ny lejlighed: {area[1]} {prio}", title, ""]
     if d.rent:
@@ -97,7 +98,12 @@ def message(site, url, title, area, d, flags, application):
     if flags:
         lines.append("Tjek selv: " + ", ".join(flags))
     lines += ["", f"Udlejer: {site.name}", url, ""]
-    lines.append(site.how_to_apply)
+    if mail_to and mailer.configured():
+        lines.append(f"🤖 Jeg søger automatisk på mail til {mail_to} og skriver, når det er sendt.")
+    elif mail_to:
+        lines.append(f"Søg på mail til {mail_to} (eller sæt Gmail op, så søger jeg automatisk).")
+    else:
+        lines.append(site.how_to_apply)
     lines += ["", "Ansøgning (kopiér):", "", application]
     return "\n".join(lines)
 
@@ -110,6 +116,28 @@ async def fetch_text(page, url, wait_ms):
         pass
     await page.wait_for_timeout(wait_ms)
     return await page.inner_text("body")
+
+
+def apply_pending(state, chat_id):
+    """Send ansøgning på mail til fundne boliger, der ikke er søgt endnu."""
+    if not mailer.configured():
+        return
+    sent = 0
+    for url, m in state.get("matches", {}).items():
+        if m.get("applied") or not m.get("mail_to") or sent >= MAX_APPLY_PER_RUN:
+            continue
+        body = render(m["title"], m["area"], Details(dishwasher=m.get("dishwasher"), washer=m.get("washer")))
+        body += f"\n\n(Annonce: {url})"
+        try:
+            mailer.send(m["mail_to"], f"Ansøgning om lejligheden {m['title']}", body)
+        except Exception as e:
+            traceback.print_exc()
+            telegram.send(chat_id, f"⚠️ Kunne ikke sende ansøgning til {m['mail_to']} for {m['title']} ({type(e).__name__}). Søg gerne selv: {url}")
+            m["applied"] = "fejl"
+            continue
+        m["applied"] = datetime.now(timezone.utc).isoformat(timespec="minutes")
+        sent += 1
+        telegram.send(chat_id, f"✅ Søgt automatisk: {m['title']}\nMail sendt til {m['mail_to']} (kopi i din indbakke).\n{url}")
 
 
 async def run(dry_run=False):
@@ -169,12 +197,18 @@ async def run(dry_run=False):
                     continue
                 found += 1
                 title = site.title(card, url)
-                msg = message(site, url, title, area, d, flags, render(title, area[1], d))
+                mail_to = mailer.pick_recipient(text) if site.apply_email else None
+                state.setdefault("matches", {})[url] = {
+                    "site": site.name, "title": title, "area": area[1], "found": now, "mail_to": mail_to,
+                    "dishwasher": d.dishwasher, "washer": d.washer, "applied": None}
+                msg = message(site, url, title, area, d, flags, render(title, area[1], d), mail_to)
                 if dry_run or not chat_id:
                     print(msg)
                 else:
                     telegram.send(chat_id, msg)
         await browser.close()
+    if not dry_run and chat_id:
+        apply_pending(state, chat_id)
     if not dry_run:
         save_state(state)
     print(f"Færdig: {found} nye relevante lejligheder")
