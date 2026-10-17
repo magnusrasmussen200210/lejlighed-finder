@@ -56,3 +56,16 @@ def test_evaluate_and_message():
     msg = message(SITES[0], "https://x", "Herluf Trolles Gade 24 A", area, d, flags, render("Herluf Trolles Gade 24 A", area[1], d))
     assert "8.700 kr" in msg and "Trøjborg" in msg
     assert not evaluate(text.replace("8.200", "9.800"))[0]  # over budget med aconto
+
+
+def test_newlines_and_ae():
+    d = parse("Økonomi\nHusleje\n10.245 kr\nA/C (Aconto)\n750 kr\n2 rum\n51 m²\nThomas Koppels Gade 90, 10. 3\n8000 Aarhus C")
+    assert (d.rent, d.aconto, d.rooms, d.size, d.postcode) == (10245, 750, 2, 51, "8000")
+    d = parse("Husleje (Mdl.) :\n11.195,-\nA/C forbrug :\n600,-\nForudbetalt leje: 10.995,-")
+    assert (d.rent, d.aconto) == (11195, 600)
+
+
+def test_senior():
+    from finder.main import evaluate
+    ok, *_ = evaluate("Teglgårdens virkeboliger - for lejere der er +50 år, 8000 Aarhus C, Husleje 8.000 kr, 2 vær., 60 m²")
+    assert not ok

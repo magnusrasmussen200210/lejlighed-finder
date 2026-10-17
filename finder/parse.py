@@ -49,7 +49,7 @@ def _yes_no(label: str, text: str) -> bool | None:
 
 
 def parse(text: str) -> Details:
-    t = text.replace("\xa0", " ")
+    t = re.sub(r"\s+", " ", text.replace("\xa0", " "))
     d = Details()
 
     rents = _amounts(r"m[åa]nedlig\s+leje|husleje(?:\s*\(mdl\.\))?|leje\s+pr\.?\s*m[åa]ned|\bleje\b", t)

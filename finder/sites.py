@@ -92,7 +92,7 @@ SITES = [
     Site(
         name="Go'Bolig",
         list_urls=["https://gobolig.dk/soeg-lejebolig/#filter[city=8000:8200]"],
-        link_re=r"gobolig\.dk/midtjylland/aarhus-[cn]/",
+        link_re=r"gobolig\.dk/midtjylland/aarhus-[cn]/[^/]+/[^/]+",
         how_to_apply="Søg via linket. Go'Bolig kræver en gratis profil.",
         wait_ms=4000,
     ),

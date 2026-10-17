@@ -20,6 +20,7 @@ MAX_TOTAL = 10_000
 MIN_ROOMS = 2
 MIN_SIZE = 45
 MIN_MONTHS = 12
+SENIOR = re.compile(r"\+\s?50\s?år|50\+|55\+|60\+|seniorbolig|seniorlejlighed|over 50 år|til den modne lejer", re.I)
 
 
 def load_state():
@@ -47,6 +48,8 @@ def evaluate(text: str, where: str = ""):
     if not area:
         return False, None, d, ["område"]
     flags = []
+    if SENIOR.search(text):
+        return False, area, d, ["seniorbolig"]
     if d.rooms is not None and d.rooms < MIN_ROOMS:
         return False, area, d, ["værelser"]
     if d.size is not None and d.size < MIN_SIZE:
