@@ -1,0 +1,11 @@
+Hej
+
+Vi vil meget gerne søge lejligheden på {adresse}.
+
+{omraade_saetning}
+
+{bolig_saetning}
+
+(Den rigtige ansøgning ligger som GitHub-secret ANSOEGNING og bruges automatisk, når den er sat.)
+
+{telefon} · {email}
