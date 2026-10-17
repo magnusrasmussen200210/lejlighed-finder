@@ -1,7 +1,8 @@
 name: Tjek lejligheder
 on:
-  schedule:
-    - cron: "*/10 * * * *"
+  # schedule slås til igen, når prøvekørslen ser rigtig ud
+  # schedule:
+  #   - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -41,5 +42,6 @@ jobs:
         run: |
           git config user.name "lejlighed-finder"
           git config user.email "actions@users.noreply.github.com"
+          [ -d state ] || exit 0
           git add state/
           git diff --cached --quiet || (git commit -qm "Opdater sete annoncer" && git push)

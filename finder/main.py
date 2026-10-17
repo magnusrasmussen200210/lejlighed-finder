@@ -33,10 +33,17 @@ def save_state(state):
     STATE.write_text(json.dumps(state, indent=1, ensure_ascii=False, sort_keys=True))
 
 
-def evaluate(text: str):
-    """Returnerer (ok, area, details, flags)."""
+def evaluate(text: str, where: str = ""):
+    """Returnerer (ok, area, details, flags). `where` er annoncens adresse/kort/URL og bruges til områdebestemmelse,
+    så vejnavne fra andre annoncer eller sidefoden på detaljesiden ikke forvirrer."""
     d = parse(text)
-    area = classify(text, d.postcode)
+    if where:
+        w = parse(where)
+        d.postcode = w.postcode or d.postcode
+        for f in ("rent", "aconto", "size", "rooms"):
+            if getattr(d, f) is None:
+                setattr(d, f, getattr(w, f))
+    area = classify(where or text, d.postcode)
     if not area:
         return False, None, d, ["område"]
     flags = []
@@ -144,12 +151,15 @@ async def run(dry_run=False):
                     print("  kunne ikke hente", url, e)
                     del state["seen"][url]
                     continue
-                ok, area, d, flags = evaluate(text + "\n" + unquote(url).replace("-", " "))
+                where = card + " " + unquote(url).replace("-", " ")
+                ok, area, d, flags = evaluate(text, where)
+                if dry_run:
+                    print("    TEKST:", re.sub(r"\s+", " ", text)[:3000])
                 print(f"  {'MATCH' if ok else 'nej  '} {url} {flags} {d}")
                 if not ok:
                     continue
                 found += 1
-                title = site.title(text, url)
+                title = site.title(card, url)
                 msg = message(site, url, title, area, d, flags, render(title, area[1], d))
                 if dry_run or not chat_id:
                     print(msg)

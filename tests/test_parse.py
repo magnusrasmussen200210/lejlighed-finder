@@ -51,7 +51,7 @@ def test_evaluate_and_message():
     from finder.sites import SITES
     from finder.application import render
     text = "Herluf Trolles Gade 24 A, st. tv. 8200 Aarhus N Husleje 8.200 kr. Aconto varme 500 kr. 52 m² 2 værelser Opvaskemaskine: Ja Lejeperiode: Ubegrænset"
-    ok, area, d, flags = evaluate(text)
+    ok, area, d, flags = evaluate(text, text)
     assert ok and area == (1, "Trøjborg") and flags == []
     msg = message(SITES[0], "https://x", "Herluf Trolles Gade 24 A", area, d, flags, render("Herluf Trolles Gade 24 A", area[1], d))
     assert "8.700 kr" in msg and "Trøjborg" in msg
