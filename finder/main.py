@@ -20,7 +20,7 @@ MAX_TOTAL = 10_000
 MIN_ROOMS = 2
 MIN_SIZE = 45
 MIN_MONTHS = 12
-SENIOR = re.compile(r"\+\s?50\s?år|50\+|55\+|60\+|seniorbolig|seniorlejlighed|over 50 år|til den modne lejer", re.I)
+SENIOR = re.compile(r"\+\s?50\s?år|50\+|55\+|60\+|seniorbolig|seniorlejlighed|over 50 år", re.I)
 
 
 def load_state():
@@ -41,9 +41,13 @@ def evaluate(text: str, where: str = ""):
     if where:
         w = parse(where)
         d.postcode = w.postcode or d.postcode
-        for f in ("rent", "aconto", "size", "rooms"):
-            if getattr(d, f) is None:
+        # kortet fra oversigten handler kun om denne bolig, så dets tal foretrækkes frem for detaljesiden,
+        # der ofte også viser "lignende boliger"
+        for f in ("rent", "size", "rooms"):
+            if getattr(w, f) is not None:
                 setattr(d, f, getattr(w, f))
+        if d.aconto is None:
+            d.aconto = w.aconto
     area = classify(where or text, d.postcode)
     if not area:
         return False, None, d, ["område"]

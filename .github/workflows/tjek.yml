@@ -1,8 +1,7 @@
 name: Tjek lejligheder
 on:
-  # schedule slås til igen, når prøvekørslen ser rigtig ud
-  # schedule:
-  #   - cron: "*/10 * * * *"
+  schedule:
+    - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
       dry_run:
