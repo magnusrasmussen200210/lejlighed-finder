@@ -5,6 +5,10 @@ on:
       urls:
         description: "Mellemrumsseparerede URLs"
         required: true
+      form:
+        description: "Udlejer-navn for at teste formular-udfyldning (sendes ikke)"
+        required: false
+        default: ""
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -15,4 +19,11 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install playwright==1.47.0 && python -m playwright install --with-deps chromium
-      - run: python tools/probe.py ${{ github.event.inputs.urls }}
+      - if: github.event.inputs.form == ''
+        run: python tools/probe.py ${{ github.event.inputs.urls }}
+      - if: github.event.inputs.form != ''
+        env:
+          KONTAKT_TELEFON: ${{ secrets.KONTAKT_TELEFON }}
+          KONTAKT_EMAIL: ${{ secrets.KONTAKT_EMAIL }}
+          ANSOEGNING: ${{ secrets.ANSOEGNING }}
+        run: PYTHONPATH=. python tools/formtest.py "${{ github.event.inputs.form }}" ${{ github.event.inputs.urls }}

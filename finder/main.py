@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import unquote
 
-from . import mailer, telegram
+from . import forms, mailer, telegram
 from .application import render
 from .areas import classify
 from .parse import Details, parse
@@ -98,7 +98,9 @@ def message(site, url, title, area, d, flags, application, mail_to=None):
     if flags:
         lines.append("Tjek selv: " + ", ".join(flags))
     lines += ["", f"Udlejer: {site.name}", url, ""]
-    if mail_to and mailer.configured():
+    if site.name in forms.FORMS and forms.ready():
+        lines.append("🤖 Jeg udfylder udlejerens formular automatisk og skriver, når den er sendt.")
+    elif mail_to and mailer.configured():
         lines.append(f"🤖 Jeg søger automatisk på mail til {mail_to} og skriver, når det er sendt.")
     elif mail_to:
         lines.append(f"Søg på mail til {mail_to} (eller sæt Gmail op, så søger jeg automatisk).")
@@ -116,6 +118,23 @@ async def fetch_text(page, url, wait_ms):
         pass
     await page.wait_for_timeout(wait_ms)
     return await page.inner_text("body")
+
+
+async def submit_form(site, page, url, title, application, state, chat_id, dry_run):
+    """Udfyld udlejerens formular. I dry run udfyldes den kun, så felterne kan tjekkes uden at sende noget."""
+    try:
+        result = await forms.FORMS[site.name](page, url, application, submit=not dry_run)
+    except Exception as e:
+        traceback.print_exc()
+        print("  formular fejlede:", e)
+        if not dry_run:
+            state["matches"][url]["applied"] = "fejl"
+            telegram.send(chat_id, f"⚠️ Kunne ikke udfylde {site.name}s formular for {title} ({type(e).__name__}). Søg gerne selv: {url}")
+        return
+    print("  formular:", result)
+    if not dry_run:
+        state["matches"][url]["applied"] = datetime.now(timezone.utc).isoformat(timespec="minutes")
+        telegram.send(chat_id, f"✅ Søgt automatisk: {title}\nFormularen hos {site.name} er sendt.\n{url}")
 
 
 def apply_pending(state, chat_id):
@@ -157,6 +176,7 @@ async def run(dry_run=False):
     now = datetime.now(timezone.utc).isoformat(timespec="minutes")
     slot = int(datetime.now(timezone.utc).timestamp() // 600)  # nummeret på det aktuelle 10-minutters vindue
     found = 0
+    applied_now = 0
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         ctx = await browser.new_context(locale="da-DK", user_agent=(
@@ -197,15 +217,20 @@ async def run(dry_run=False):
                     continue
                 found += 1
                 title = site.title(card, url)
-                mail_to = mailer.pick_recipient(text) if site.apply_email else None
+                use_form = site.name in forms.FORMS and forms.ready()
+                mail_to = mailer.pick_recipient(text) if site.apply_email and not use_form else None
                 state.setdefault("matches", {})[url] = {
                     "site": site.name, "title": title, "area": area[1], "found": now, "mail_to": mail_to,
                     "dishwasher": d.dishwasher, "washer": d.washer, "applied": None}
-                msg = message(site, url, title, area, d, flags, render(title, area[1], d), mail_to)
+                application = render(title, area[1], d)
+                msg = message(site, url, title, area, d, flags, application, mail_to)
                 if dry_run or not chat_id:
                     print(msg)
                 else:
                     telegram.send(chat_id, msg)
+                if use_form and (applied_now < MAX_APPLY_PER_RUN or dry_run):
+                    applied_now += 1
+                    await submit_form(site, page, url, title, application, state, chat_id, dry_run)
         await browser.close()
     if not dry_run and chat_id:
         apply_pending(state, chat_id)
