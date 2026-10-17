@@ -7,8 +7,7 @@ import sys
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
-
-from playwright.async_api import async_playwright
+from urllib.parse import unquote
 
 from . import telegram
 from .application import render
@@ -73,9 +72,11 @@ def message(site, url, title, area, d, flags, application):
         total = f" (i alt {fmt_kr(d.rent + d.aconto)})" if d.aconto else ""
         lines.append(f"Husleje: {fmt_kr(d.rent)}" + (f" + aconto {fmt_kr(d.aconto)}" if d.aconto else "") + total)
     if d.size or d.rooms:
-        lines.append(f"Størrelse: {d.size or '?'} m², {d.rooms and int(d.rooms) if d.rooms and d.rooms.is_integer() else d.rooms or '?'} værelser")
-    lines.append("Opvaskemaskine: " + ("ja ✅" if d.dishwasher else "ikke nævnt"))
-    lines.append("Vaskemaskine: " + ("ja ✅" if d.washer else "ikke nævnt"))
+        rooms = "?" if d.rooms is None else (int(d.rooms) if d.rooms.is_integer() else d.rooms)
+        lines.append(f"Størrelse: {d.size or '?'} m², {rooms} værelser")
+    yn = {True: "ja ✅", False: "nej", None: "ikke nævnt"}
+    lines.append("Opvaskemaskine: " + yn[d.dishwasher])
+    lines.append("Vaskemaskine: " + yn[d.washer])
     lines.append("Lejeperiode: " + ("ubegrænset ✅" if d.unlimited else "tidsbegrænset" if d.unlimited is False else "ikke nævnt"))
     if flags:
         lines.append("Tjek selv: " + ", ".join(flags))
@@ -95,10 +96,12 @@ async def fetch_text(page, url, wait_ms):
     return await page.inner_text("body")
 
 
-async def run(dry_run=False, notify_existing=True):
+async def run(dry_run=False):
+    from playwright.async_api import async_playwright
+
     state = load_state()
     chat_id = state.get("chat_id") or (os.environ.get("TELEGRAM_CHAT_ID") and int(os.environ["TELEGRAM_CHAT_ID"]))
-    if not chat_id and os.environ.get("TELEGRAM_BOT_TOKEN"):
+    if not chat_id and os.environ.get("TELEGRAM_BOT_TOKEN") and not dry_run:
         chat_id = telegram.discover_chat_id()
         if chat_id:
             state["chat_id"] = chat_id
@@ -107,6 +110,7 @@ async def run(dry_run=False, notify_existing=True):
         print("Ingen Telegram chat-id endnu; skriv en besked til botten")
 
     now = datetime.now(timezone.utc).isoformat(timespec="minutes")
+    slot = int(datetime.now(timezone.utc).timestamp() // 600)  # nummeret på det aktuelle 10-minutters vindue
     found = 0
     async with async_playwright() as p:
         browser = await p.chromium.launch()
@@ -114,6 +118,8 @@ async def run(dry_run=False, notify_existing=True):
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36"))
         page = await ctx.new_page()
         for site in SITES:
+            if slot % site.every:
+                continue
             try:
                 listings = await site.collect(page)
                 state["errors"].pop(site.name, None)
@@ -137,7 +143,7 @@ async def run(dry_run=False, notify_existing=True):
                     print("  kunne ikke hente", url, e)
                     del state["seen"][url]
                     continue
-                ok, area, d, flags = evaluate(text)
+                ok, area, d, flags = evaluate(text + "\n" + unquote(url).replace("-", " "))
                 print(f"  {'MATCH' if ok else 'nej  '} {url} {flags} {d}")
                 if not ok:
                     continue
@@ -149,7 +155,8 @@ async def run(dry_run=False, notify_existing=True):
                 else:
                     telegram.send(chat_id, msg)
         await browser.close()
-    save_state(state)
+    if not dry_run:
+        save_state(state)
     print(f"Færdig: {found} nye relevante lejligheder")
 
 
