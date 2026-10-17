@@ -35,7 +35,9 @@ async def heimstaden(page, url, text, submit):
     await form.locator("[name=adults]").fill("2")
     await form.locator("[name=kids]").fill("0")
     await form.locator("[name=comments]").fill(text)
-    await form.locator("[name=terms]").check(force=True)
+    # afkrydsningsfeltet er skjult bag en stylet label, så det sættes direkte
+    await form.locator("[name=terms]").evaluate(
+        "e => { e.checked = true; e.dispatchEvent(new Event('change', {bubbles: true})); }")
     if not submit:
         return "udfyldt (ikke sendt)"
     await form.locator("[type=submit]").click()
