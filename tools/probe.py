@@ -21,11 +21,15 @@ async def probe(browser, url):
                 body = await resp.text()
             except Exception:
                 body = ""
-            json_calls.append((resp.request.method, resp.url, len(body), body[:600]))
+            json_calls.append((resp.request.method, resp.url, len(body), body[:3000]))
 
     page.on("response", on_response)
     try:
-        resp = await page.goto(url, wait_until="networkidle", timeout=45000)
+        resp = await page.goto(url, wait_until="domcontentloaded", timeout=45000)
+        try:
+            await page.wait_for_load_state("networkidle", timeout=15000)
+        except Exception:
+            pass
         print("status", resp.status if resp else None, "final", page.url)
     except Exception as e:
         print("GOTO ERROR", e)
@@ -41,9 +45,9 @@ async def probe(browser, url):
     for f in forms:
         print("FORM", f)
     for m, u, n, b in json_calls:
-        print("JSON", m, u, n, b.replace("\n", " ")[:600])
+        print("JSON", m, u, n, b.replace("\n", " ")[:3000])
     text = await page.inner_text("body")
-    print("TEXT", re.sub(r"\s+", " ", text)[:1500])
+    print("TEXT", re.sub(r"\s+", " ", text)[:4000])
     await page.close()
 
 
