@@ -52,6 +52,8 @@ def evaluate(text: str, where: str = ""):
     if not area:
         return False, None, d, ["område"]
     flags = []
+    if d.rent is None and d.size is None and d.rooms is None:
+        return False, area, d, ["kunne ikke læse annoncen"]
     if SENIOR.search(text):
         return False, area, d, ["seniorbolig"]
     if d.rooms is not None and d.rooms < MIN_ROOMS:

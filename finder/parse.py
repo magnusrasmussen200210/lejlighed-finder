@@ -72,7 +72,7 @@ def parse(text: str) -> Details:
     d.size = int(m.group(1)) if m else None
 
     m = (re.search(r"(?:antal\s+)?v[æa]relser\s*:?\s*(\d(?:[.,]5)?)\b", t, re.I)
-         or re.search(r"\b(\d(?:[.,]5)?)\s*-?\s*(?:v[æa]r(?:elses?|\.)|rums?\b)", t, re.I))
+         or re.search(r"\b(\d(?:[.,]5)?)\s*-?\s*(?:v(?:æ|a|ae)r(?:elses?|\.)|rums?\b)", t, re.I))
     d.rooms = float(m.group(1).replace(",", ".")) if m else None
 
     m = (re.search(r"postn(?:umme)?r\.?(?:\s+og\s+by)?\s*:?\s*(8\d{3})\b", t, re.I)
