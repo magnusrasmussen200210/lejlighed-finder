@@ -107,7 +107,8 @@ async def run(dry_run=False):
             state["chat_id"] = chat_id
             telegram.send(chat_id, "Hej Magnus! Lejlighed Finder er sat op og tjekker nu udlejernes sider automatisk. Jeg skriver her, når der dukker en relevant lejlighed op.")
     if not chat_id and not dry_run:
-        print("Ingen Telegram chat-id endnu; skriv en besked til botten")
+        print("Ingen Telegram chat-id endnu (mangler token, eller ingen har skrevet til botten). Kører som dry run.")
+        dry_run = True
 
     now = datetime.now(timezone.utc).isoformat(timespec="minutes")
     slot = int(datetime.now(timezone.utc).timestamp() // 600)  # nummeret på det aktuelle 10-minutters vindue
