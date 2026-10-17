@@ -102,4 +102,23 @@ SITES = [
         link_re=r"phoenixhome\.dk/find-bolig/[^/?#]+/?$",
         how_to_apply="Søg via linket.",
     ),
+    Site(
+        name="Findbolig.nu",
+        list_urls=["https://www.findbolig.nu/da-dk/find?Commune=Aarhus&Rent=0%2C10000&Rooms=2%2C10&Area=45%2C500"],
+        link_re=r"findbolig\.nu/da-dk/residence/\d+",
+        how_to_apply="Søg via linket. Findbolig kræver en gratis profil.",
+        wait_ms=4000,
+    ),
+    Site(
+        name="AE Ejendom",
+        list_urls=["https://aeejendom.dk/ledige-lejemal?q=Aarhus%20C", "https://aeejendom.dk/ledige-lejemal?q=Aarhus%20N"],
+        link_re=r"aeejendom\.dk/lejemaal/[a-z0-9-]+$",
+        how_to_apply="Søg via linket.",
+    ),
+    Site(
+        name="UngdomsboligAarhus",
+        list_urls=["https://ungdomsboligaarhus.dk/alle-boliger-uden-ventetid"],
+        link_re=r"ungdomsboligaarhus\.dk/lejemaal/\d+/",
+        how_to_apply="Kræver en ansøgning hos UngdomsboligAarhus (begge skal være studerende).",
+    ),
 ]
