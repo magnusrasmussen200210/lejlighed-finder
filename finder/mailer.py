@@ -14,7 +14,7 @@ def configured() -> bool:
 
 def pick_recipient(text: str, own_domain_hint: str = "") -> str | None:
     """Vælg udlejerens kontaktperson fra annoncen; generelle adresser bruges kun hvis der ikke er andre."""
-    me = (os.environ.get("KONTAKT_EMAIL") or "").lower()
+    me = (os.environ.get("KONTAKT_EMAIL") or "").strip().lower()
     found = []
     for e in EMAIL.findall(text):
         e = e.rstrip(".").lower()
@@ -25,7 +25,7 @@ def pick_recipient(text: str, own_domain_hint: str = "") -> str | None:
 
 
 def send(to: str, subject: str, body: str):
-    sender = os.environ["KONTAKT_EMAIL"]
+    sender = os.environ["KONTAKT_EMAIL"].strip()
     msg = EmailMessage()
     msg["From"] = f"Magnus og Ida <{sender}>"
     msg["To"] = to
@@ -33,5 +33,5 @@ def send(to: str, subject: str, body: str):
     msg["Subject"] = subject
     msg.set_content(body)
     with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=30) as s:
-        s.login(sender, os.environ["GMAIL_APP_PASSWORD"].replace(" ", ""))
+        s.login(sender, re.sub(r"\s", "", os.environ["GMAIL_APP_PASSWORD"]))
         s.send_message(msg)

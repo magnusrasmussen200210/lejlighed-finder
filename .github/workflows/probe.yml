@@ -21,7 +21,12 @@ jobs:
       - run: pip install playwright==1.47.0 && python -m playwright install --with-deps chromium
       - if: github.event.inputs.form == ''
         run: python tools/probe.py ${{ github.event.inputs.urls }}
-      - if: github.event.inputs.form != ''
+      - if: github.event.inputs.form == 'mail'
+        env:
+          KONTAKT_EMAIL: ${{ secrets.KONTAKT_EMAIL }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: PYTHONPATH=. python tools/mailtest.py
+      - if: github.event.inputs.form != '' && github.event.inputs.form != 'mail'
         env:
           KONTAKT_TELEFON: ${{ secrets.KONTAKT_TELEFON }}
           KONTAKT_EMAIL: ${{ secrets.KONTAKT_EMAIL }}
