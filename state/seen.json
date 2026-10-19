@@ -1,9 +1,10 @@
 {
  "chat_id": 8718312433,
  "errors": {},
+ "mail_login_error": true,
  "matches": {
   "https://dacas.dk/lejlighed/strandvejen-10b-1-tv-8000-aarhus-c/": {
-   "applied": "fejl",
+   "applied": null,
    "area": "Aarhus C",
    "dishwasher": true,
    "found": "2026-10-19T06:41+00:00",
@@ -13,7 +14,7 @@
    "washer": false
   },
   "https://dacas.dk/lejlighed/vesterbrogade-29-1-lejl-6-8000-aarhus-c/": {
-   "applied": "fejl",
+   "applied": null,
    "area": "Aarhus C",
    "dishwasher": true,
    "found": "2026-10-19T06:41+00:00",

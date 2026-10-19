@@ -3,6 +3,7 @@ import asyncio
 import json
 import os
 import re
+import smtplib
 import sys
 import traceback
 from datetime import datetime, timezone
@@ -149,12 +150,20 @@ def apply_pending(state, chat_id):
         body += f"\n\n(Annonce: {url})"
         try:
             mailer.send(m["mail_to"], f"Ansøgning om lejligheden {m['title']}", body)
+        except (smtplib.SMTPAuthenticationError, smtplib.SMTPServerDisconnected) as e:
+            # login til Gmail fejler: ansøgningerne venter, til adgangskoden er rettet, og Magnus får kun besked én gang
+            traceback.print_exc()
+            if not state.get("mail_login_error"):
+                state["mail_login_error"] = True
+                telegram.send(chat_id, "⚠️ Jeg kan ikke logge ind på Gmail, så mail-ansøgninger venter. Secret GMAIL_APP_PASSWORD skal være en app-adgangskode på 16 bogstaver, ikke din normale adgangskode.")
+            return
         except Exception as e:
             traceback.print_exc()
             telegram.send(chat_id, f"⚠️ Kunne ikke sende ansøgning til {m['mail_to']} for {m['title']} ({type(e).__name__}). Søg gerne selv: {url}")
             m["applied"] = "fejl"
             continue
         m["applied"] = datetime.now(timezone.utc).isoformat(timespec="minutes")
+        state.pop("mail_login_error", None)
         sent += 1
         telegram.send(chat_id, f"✅ Søgt automatisk: {m['title']}\nMail sendt til {m['mail_to']} (kopi i din indbakke).\n{url}")
 
