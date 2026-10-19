@@ -159,10 +159,13 @@ def apply_pending(state, chat_id):
         telegram.send(chat_id, f"✅ Søgt automatisk: {m['title']}\nMail sendt til {m['mail_to']} (kopi i din indbakke).\n{url}")
 
 
-async def run(dry_run=False):
+async def run(dry_run=False, forget=()):
     from playwright.async_api import async_playwright
 
     state = load_state()
+    for url in forget:  # behandl annoncer igen, f.eks. når Magnus vil søge en, han allerede har fået besked om
+        state["seen"].pop(url, None)
+        state.get("matches", {}).pop(url, None)
     chat_id = state.get("chat_id") or (os.environ.get("TELEGRAM_CHAT_ID") and int(os.environ["TELEGRAM_CHAT_ID"]))
     if not chat_id and os.environ.get("TELEGRAM_BOT_TOKEN") and not dry_run:
         chat_id = telegram.discover_chat_id()
@@ -240,4 +243,4 @@ async def run(dry_run=False):
 
 
 if __name__ == "__main__":
-    asyncio.run(run(dry_run="--dry-run" in sys.argv))
+    asyncio.run(run(dry_run="--dry-run" in sys.argv, forget=[a for a in sys.argv[1:] if a.startswith("http")]))

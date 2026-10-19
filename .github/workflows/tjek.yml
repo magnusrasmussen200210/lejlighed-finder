@@ -8,6 +8,10 @@ on:
         description: "Kun log, send ikke Telegram"
         type: boolean
         default: false
+      genbehandl:
+        description: "Annonce-URLs der skal behandles (og søges) igen, mellemrumsseparerede"
+        required: false
+        default: ""
 concurrency:
   group: tjek
   cancel-in-progress: false
@@ -36,7 +40,7 @@ jobs:
           KONTAKT_TELEFON: ${{ secrets.KONTAKT_TELEFON }}
           KONTAKT_EMAIL: ${{ secrets.KONTAKT_EMAIL }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-        run: python -m finder.main ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }}
+        run: python -m finder.main ${{ github.event.inputs.dry_run == 'true' && '--dry-run' || '' }} ${{ github.event.inputs.genbehandl }}
       - name: Gem hvilke annoncer der er set
         if: always()
         run: |

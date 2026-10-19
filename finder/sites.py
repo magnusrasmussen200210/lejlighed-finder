@@ -98,6 +98,7 @@ SITES = [
         list_urls=["https://www.laros.dk/ledige-lejemal"],
         link_re=r"laros\.dk/ledige-lejemal/[a-z0-9-]+-\d+$",
         how_to_apply="Søg via linket (Laros' egen side).",
+        apply_email=True,
     ),
     Site(
         name="Heimstaden",
