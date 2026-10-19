@@ -1,6 +1,28 @@
 {
  "chat_id": 8718312433,
  "errors": {},
+ "matches": {
+  "https://dacas.dk/lejlighed/strandvejen-10b-1-tv-8000-aarhus-c/": {
+   "applied": "fejl",
+   "area": "Aarhus C",
+   "dishwasher": true,
+   "found": "2026-10-19T06:41+00:00",
+   "mail_to": "arp@dacas.dk",
+   "site": "Dansk Administrationscenter",
+   "title": "strandvejen 10b 1 tv 8000 aarhus c",
+   "washer": false
+  },
+  "https://dacas.dk/lejlighed/vesterbrogade-29-1-lejl-6-8000-aarhus-c/": {
+   "applied": "fejl",
+   "area": "Aarhus C",
+   "dishwasher": true,
+   "found": "2026-10-19T06:41+00:00",
+   "mail_to": "arp@dacas.dk",
+   "site": "Dansk Administrationscenter",
+   "title": "vesterbrogade 29 1 lejl 6 8000 aarhus c",
+   "washer": false
+  }
+ },
  "seen": {
   "https://aeejendom.dk/lejemaal/thomas-koppels-gade-90-10-1": "2026-10-17T18:40+00:00",
   "https://aeejendom.dk/lejemaal/thomas-koppels-gade-90-10-2": "2026-10-17T18:40+00:00",
@@ -35,9 +57,9 @@
   "https://dacas.dk/lejlighed/sennelsgade-2-3-sal-8900-randers-c/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/sidesporet-24-st-tv-8930-randers-noe/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/soeren-moellers-gade-32-1-sal-8900-randers-c/": "2026-10-17T18:40+00:00",
-  "https://dacas.dk/lejlighed/strandvejen-10b-1-tv-8000-aarhus-c/": "2026-10-17T18:40+00:00",
+  "https://dacas.dk/lejlighed/strandvejen-10b-1-tv-8000-aarhus-c/": "2026-10-19T06:41+00:00",
   "https://dacas.dk/lejlighed/trepkasgade-33-5-th-8000-aarhus-c/": "2026-10-17T18:40+00:00",
-  "https://dacas.dk/lejlighed/vesterbrogade-29-1-lejl-6-8000-aarhus-c/": "2026-10-17T18:40+00:00",
+  "https://dacas.dk/lejlighed/vesterbrogade-29-1-lejl-6-8000-aarhus-c/": "2026-10-19T06:41+00:00",
   "https://dacas.dk/lejlighed/vestergade-31c-1-th-8600-silkeborg/": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/peter-sabroes-gade-14-8000-aarhus-c/peter-sabroes-gade-14a-kl": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/peter-sabroes-gade-14-8000-aarhus-c/peter-sabroes-gade-14b-kl": "2026-10-17T18:40+00:00",
@@ -45,6 +67,7 @@
   "https://gobolig.dk/midtjylland/aarhus-c/vesterport-7-8000-aarhus-c/vesterport-7-1-2": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/vesterport-7-8000-aarhus-c/vesterport-7-6-1": "2026-10-17T18:40+00:00",
   "https://henning-poulsen.dk/afdelinger-og-ledige-boliger-oprettelse/1-ejendomsselskabet-henning-poulsen-inger-hove-ks/72-holmevej-273-283/15-holmevej-275-2-tv/": "2026-10-17T20:51+00:00",
+  "https://propstep.com/da-DK/bolig/63fdc994ce4d2c604a94ebec-moellevangs-alle-157-c-4-1": "2026-10-19T06:41+00:00",
   "https://propstep.com/da-DK/bolig/66bf11bb9468512994e96b6b-thit-jensens-gade-28-6-th": "2026-10-17T18:40+00:00",
   "https://propstep.com/da-DK/bolig/66bf11c09468512994e96ba9-thit-jensens-gade-30-8-mf": "2026-10-17T18:40+00:00",
   "https://propstep.com/da-DK/bolig/66bf11da8f191864519a71db-thit-jensens-gade-4-5-tv": "2026-10-17T18:40+00:00",
@@ -83,13 +106,13 @@
   "https://www.heimstaden.dk/lejebolig/engsoevej-210-3-mf-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
   "https://www.heimstaden.dk/lejebolig/kappelvaenget-12-st-1-8210-aarhus-v/": "2026-10-17T18:40+00:00",
   "https://www.heimstaden.dk/lejebolig/skejbyvej-279-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
-  "https://www.laros.dk/ledige-lejemal/aahusene-3-2-3-aarhus-c-3167": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/aahusene-3-5-4-aarhus-c-3168": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/apisvej-32-1-21-tilst-3166": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/apisvej-32-2-20-tilst-3165": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/f-vestergaards-gade-22-5-vaer-4-aarhus-c-3155": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/gebauersgade-2-1-19-aarhus-c-3163": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/herluf-trolles-gade-24-a-st-tv-aarhus-n-3170": "2026-10-17T18:40+00:00",
+  "https://www.laros.dk/ledige-lejemal/jernbanegade-14-b-1-th-hjoerring-3130": "2026-10-19T06:41+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-1-8-horsens-3169": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-2-11-horsens-3134": "2026-10-17T18:40+00:00",
   "https://www.phoenixhome.dk/find-bolig/fjordvej-96,-6000-kolding/": "2026-10-17T18:40+00:00",
