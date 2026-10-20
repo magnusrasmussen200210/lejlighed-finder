@@ -22,6 +22,16 @@
    "site": "Dansk Administrationscenter",
    "title": "vesterbrogade 29 1 lejl 6 8000 aarhus c",
    "washer": false
+  },
+  "https://www.laros.dk/ledige-lejemal/soendre-ringgade-11-2-th-aarhus-c-3172": {
+   "applied": null,
+   "area": "Aarhus C",
+   "dishwasher": true,
+   "found": "2026-10-20T07:43+00:00",
+   "mail_to": "info@laros.dk",
+   "site": "Laros",
+   "title": "Søndre Ringgade 11, 2. th. 8000 Aarhus C",
+   "washer": false
   }
  },
  "seen": {
@@ -126,7 +136,9 @@
   "https://www.laros.dk/ledige-lejemal/jernbanegade-14-b-1-th-hjoerring-3130": "2026-10-19T06:41+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-1-8-horsens-3169": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-2-11-horsens-3134": "2026-10-17T18:40+00:00",
+  "https://www.laros.dk/ledige-lejemal/soendre-ringgade-11-2-th-aarhus-c-3172": "2026-10-20T07:43+00:00",
   "https://www.laros.dk/ledige-lejemal/tage-hansens-gade-23-st-tv-aarhus-c-3171": "2026-10-19T14:33+00:00",
+  "https://www.phoenixhome.dk/find-bolig/elmevangen-60,-6000-kolding/": "2026-10-20T07:43+00:00",
   "https://www.phoenixhome.dk/find-bolig/fjordvej-96,-6000-kolding/": "2026-10-17T18:40+00:00",
   "https://www.phoenixhome.dk/find-bolig/lavritsdalsvej-7,-soeften,-8382-hinnerup/": "2026-10-17T18:40+00:00",
   "https://www.phoenixhome.dk/find-bolig/molsvej-1,-1,-8410-roende/": "2026-10-17T18:40+00:00",
