@@ -23,6 +23,16 @@
    "title": "vesterbrogade 29 1 lejl 6 8000 aarhus c",
    "washer": false
   },
+  "https://dacas.dk/lejlighed/vesterbrogade-29-2-lejl-10-8000-aarhus-c/": {
+   "applied": null,
+   "area": "Aarhus C",
+   "dishwasher": null,
+   "found": "2026-10-23T19:50+00:00",
+   "mail_to": "arp@dacas.dk",
+   "site": "Dansk Administrationscenter",
+   "title": "vesterbrogade 29 2 lejl 10 8000 aarhus c",
+   "washer": false
+  },
   "https://www.laros.dk/ledige-lejemal/gebauersgade-2-3-3-aarhus-c-3183": {
    "applied": null,
    "area": "Aarhus C",
@@ -68,6 +78,7 @@
   "https://dacas.dk/lejlighed/christiansgade-24c-st-3-8000-aarhus-c/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/emmasvej-26-3-tv-8220-brabrand/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/fjordgade-1-2-th-8930-randers-noe/": "2026-10-17T18:40+00:00",
+  "https://dacas.dk/lejlighed/frederiks-alle-149-1-tv-8000-aarhus-c/": "2026-10-23T19:50+00:00",
   "https://dacas.dk/lejlighed/h-n-clausens-gade-17-2-sal-8000-aarhus-c/": "2026-10-20T21:29+00:00",
   "https://dacas.dk/lejlighed/harekaeret-117-5220-odense-soe/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/hobrovej-14-1-tv-8900-randers-c/": "2026-10-17T18:40+00:00",
@@ -78,6 +89,7 @@
   "https://dacas.dk/lejlighed/marselis-boulevard-129-2-th-8000-aarhus-c/": "2026-10-21T22:16+00:00",
   "https://dacas.dk/lejlighed/moelndalsvej-10-2-tv-9400-noerresundby/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/noerrebrogade-84a-st-tv-8930-randers/": "2026-10-19T20:11+00:00",
+  "https://dacas.dk/lejlighed/park-alle-1-3-th-8000-aarhus-c/": "2026-10-23T19:50+00:00",
   "https://dacas.dk/lejlighed/riberdyb-1-1-lejl-5-6000-kolding/": "2026-10-19T20:11+00:00",
   "https://dacas.dk/lejlighed/rudolph-wulffs-gade-3-1-tv-8000-aarhus-c/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/rundhoej-alle-141-st-tv-8270-hoejbjerg/": "2026-10-17T18:40+00:00",
@@ -90,6 +102,7 @@
   "https://dacas.dk/lejlighed/trepkasgade-33-5-th-8000-aarhus-c/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/vardevej-34-3-tv-7100-vejle/": "2026-10-20T21:29+00:00",
   "https://dacas.dk/lejlighed/vesterbrogade-29-1-lejl-6-8000-aarhus-c/": "2026-10-19T06:41+00:00",
+  "https://dacas.dk/lejlighed/vesterbrogade-29-2-lejl-10-8000-aarhus-c/": "2026-10-23T19:50+00:00",
   "https://dacas.dk/lejlighed/vestergade-31c-1-th-8600-silkeborg/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/viggo-stuckenbergs-vej-23-1-mf-8210-aarhus-v/": "2026-10-20T21:29+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/peter-sabroes-gade-14-8000-aarhus-c/peter-sabroes-gade-14a-kl": "2026-10-17T18:40+00:00",
