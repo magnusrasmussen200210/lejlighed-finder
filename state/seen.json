@@ -1,6 +1,8 @@
 {
  "chat_id": 8718312433,
- "errors": {},
+ "errors": {
+  "UngdomsboligAarhus": 1
+ },
  "mail_login_error": true,
  "matches": {
   "https://dacas.dk/lejlighed/strandvejen-10b-1-tv-8000-aarhus-c/": {
@@ -94,6 +96,7 @@
   "https://dacas.dk/lejlighed/hobrovej-14-1-tv-8900-randers-c/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/hobrovej-46-st-th-8900-randers-c/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/ingersvej-7-st-tv-8220-brabrand/": "2026-10-17T18:40+00:00",
+  "https://dacas.dk/lejlighed/lille-voldgade-13-2-sal-8900-randers/": "2026-10-27T18:07+00:00",
   "https://dacas.dk/lejlighed/lodsejervej-22-1-8900-randers/": "2026-10-17T18:40+00:00",
   "https://dacas.dk/lejlighed/mariagervej-23-1-mf-8900-randers/": "2026-10-19T20:11+00:00",
   "https://dacas.dk/lejlighed/marselis-boulevard-129-2-th-8000-aarhus-c/": "2026-10-21T22:16+00:00",
@@ -117,13 +120,16 @@
   "https://dacas.dk/lejlighed/vesterbrogade-29-1-lejl-6-8000-aarhus-c/": "2026-10-19T06:41+00:00",
   "https://dacas.dk/lejlighed/vesterbrogade-29-2-lejl-10-8000-aarhus-c/": "2026-10-23T19:50+00:00",
   "https://dacas.dk/lejlighed/vestergade-31c-1-th-8600-silkeborg/": "2026-10-17T18:40+00:00",
+  "https://dacas.dk/lejlighed/viborgvej-38-2-th-8920-randers-nv/": "2026-10-27T18:07+00:00",
   "https://dacas.dk/lejlighed/viggo-stuckenbergs-vej-23-1-mf-8210-aarhus-v/": "2026-10-20T21:29+00:00",
+  "https://dacas.dk/lejlighed/vissingsgade-9b-1-sal-7100-vejle/": "2026-10-27T18:07+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/peter-sabroes-gade-14-8000-aarhus-c/peter-sabroes-gade-14a-kl": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/peter-sabroes-gade-14-8000-aarhus-c/peter-sabroes-gade-14b-kl": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/peter-sabroes-gade-14-8000-aarhus-c/peter-sabroes-gade-14n-kl": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/vesterport-7-8000-aarhus-c/vesterport-7-1-2": "2026-10-17T18:40+00:00",
   "https://gobolig.dk/midtjylland/aarhus-c/vesterport-7-8000-aarhus-c/vesterport-7-6-1": "2026-10-17T18:40+00:00",
   "https://henning-poulsen.dk/afdelinger-og-ledige-boliger-oprettelse/1-ejendomsselskabet-henning-poulsen-inger-hove-ks/72-holmevej-273-283/15-holmevej-275-2-tv/": "2026-10-17T20:51+00:00",
+  "https://propstep.com/da-DK/bolig/62f623651a175b10aa2c1701-thomas-koppels-gade-34-2-tv": "2026-10-27T18:07+00:00",
   "https://propstep.com/da-DK/bolig/63b7fd119e487f54ead8d0aa-ceres-alle-11-a-5-3": "2026-10-20T13:03+00:00",
   "https://propstep.com/da-DK/bolig/63fdc991ce4d2c604a94e8f8-moellevangs-alle-157-a-st-5": "2026-10-19T14:33+00:00",
   "https://propstep.com/da-DK/bolig/63fdc993ce4d2c604a94eb3e-moellevangs-alle-157-b-10-7": "2026-10-26T11:16+00:00",
