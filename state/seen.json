@@ -1,8 +1,6 @@
 {
  "chat_id": 8718312433,
- "errors": {
-  "UngdomsboligAarhus": 4
- },
+ "errors": {},
  "mail_login_error": true,
  "matches": {
   "https://dacas.dk/lejlighed/strandvejen-10b-1-tv-8000-aarhus-c/": {
@@ -173,7 +171,9 @@
   "https://vidarejendomme.dk/lejebolig/olof-palmes-alle-9u-2-tv-8200-aarhus-n/": "2026-10-17T18:40+00:00",
   "https://vidarejendomme.dk/lejebolig/silkeborgvej-70-3-tv-8000-aarhus-c/": "2026-10-19T14:33+00:00",
   "https://vidarejendomme.dk/lejebolig/stenvej-48-8270-hoejbjerg/": "2026-10-19T14:33+00:00",
+  "https://vidarejendomme.dk/lejebolig/valdemarsgade-28b-8000-aarhus-c/": "2026-10-28T13:53+00:00",
   "https://www.delinde.dk/bolig/1-vaerelses-amaliegade-23-3-4-8000-aarhus-c": "2026-10-17T18:40+00:00",
+  "https://www.delinde.dk/bolig/1-vaerelses-sonder-alle-25a-1-8-8000-aarhus-c": "2026-10-28T13:53+00:00",
   "https://www.delinde.dk/bolig/1-vaerelses-sonder-alle-25a-2-5-8000-aarhus-c": "2026-10-17T18:40+00:00",
   "https://www.delinde.dk/bolig/3-vaerelses-jens-baggesens-vej-88-k-1-tv-8200-aarhus-n": "2026-10-17T18:40+00:00",
   "https://www.delinde.dk/bolig/mejerihojen-jens-baggesens-vej-88m-1-mf-8200-aarhus-n": "2026-10-17T18:40+00:00",
@@ -182,6 +182,7 @@
   "https://www.findbolig.nu/da-dk/residence/79197": "2026-10-17T18:40+00:00",
   "https://www.findbolig.nu/da-dk/residence/79201": "2026-10-17T18:40+00:00",
   "https://www.findbolig.nu/da-dk/residence/79340": "2026-10-17T18:40+00:00",
+  "https://www.findbolig.nu/da-dk/residence/94913": "2026-10-28T13:53+00:00",
   "https://www.heimstaden.dk/lejebolig/arresoevej-21a-1-3-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
   "https://www.heimstaden.dk/lejebolig/borresoevej-7-4-th-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
   "https://www.heimstaden.dk/lejebolig/borresoevej-9-st-th-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
@@ -213,6 +214,7 @@
   "https://www.laros.dk/ledige-lejemal/kildebjergs-agre-118-bjaeverskov-3175": "2026-10-22T10:32+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-1-8-horsens-3169": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-2-11-horsens-3134": "2026-10-17T18:40+00:00",
+  "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-st-1-horsens-3188": "2026-10-28T13:53+00:00",
   "https://www.laros.dk/ledige-lejemal/soendre-ringgade-11-2-th-aarhus-c-3172": "2026-10-20T07:43+00:00",
   "https://www.laros.dk/ledige-lejemal/tage-hansens-gade-23-st-tv-aarhus-c-3171": "2026-10-19T14:33+00:00",
   "https://www.phoenixhome.dk/find-bolig/elmevangen-60,-6000-kolding/": "2026-10-20T07:43+00:00",
