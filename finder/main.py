@@ -3,14 +3,13 @@ import asyncio
 import json
 import os
 import re
-import smtplib
 import sys
 import traceback
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import unquote
 
-from . import forms, mailer, telegram
+from . import mailer, telegram
 from .application import render
 from .areas import classify
 from .parse import Details, parse
@@ -18,10 +17,10 @@ from .sites import SITES
 
 STATE = Path(__file__).resolve().parent.parent / "state" / "seen.json"
 MAX_TOTAL = 10_000
+OVER_BUDGET_SLACK = 1_000  # boliger op til 1.000 kr over budget sendes stadig, men markeres
 MIN_ROOMS = 2
 MIN_SIZE = 45
 MIN_MONTHS = 12
-MAX_APPLY_PER_RUN = 5
 SENIOR = re.compile(r"\+\s?50\s?år|50\+|55\+|60\+|seniorbolig|seniorlejlighed|over 50 år", re.I)
 
 
@@ -53,7 +52,6 @@ def evaluate(text: str, where: str = ""):
     area = classify(where or text, d.postcode)
     if not area:
         return False, None, d, ["område"]
-    flags = []
     if d.rent is None and d.size is None and d.rooms is None:
         return False, area, d, ["kunne ikke læse annoncen"]
     if SENIOR.search(text):
@@ -62,8 +60,12 @@ def evaluate(text: str, where: str = ""):
         return False, area, d, ["værelser"]
     if d.size is not None and d.size < MIN_SIZE:
         return False, area, d, ["størrelse"]
-    if d.rent is not None and d.rent + (d.aconto or 0) > MAX_TOTAL:
+    total = (d.rent or 0) + (d.aconto or 0)
+    if d.rent is not None and total > MAX_TOTAL + OVER_BUDGET_SLACK:
         return False, area, d, ["pris"]
+    flags = []
+    if d.rent is not None and total > MAX_TOTAL:
+        flags.append(f"{fmt_kr(total - MAX_TOTAL)} over budget")
     if d.unlimited is False and d.limited_months and d.limited_months < MIN_MONTHS:
         return False, area, d, ["lejeperiode"]
     if d.rent is None:
@@ -85,7 +87,8 @@ def fmt_kr(n):
 
 def message(site, url, title, area, d, flags, application, mail_to=None):
     prio = {1: "⭐⭐⭐", 2: "⭐⭐", 3: "⭐"}[area[0]]
-    lines = [f"🏠 Ny lejlighed: {area[1]} {prio}", title, ""]
+    over = [f for f in flags if f.endswith("over budget")]
+    lines = [f"🏠 Ny lejlighed: {area[1]} {prio}" + (f" (⚠️ {over[0]})" if over else ""), title, ""]
     if d.rent:
         total = f" (i alt {fmt_kr(d.rent + d.aconto)})" if d.aconto else ""
         lines.append(f"Husleje: {fmt_kr(d.rent)}" + (f" + aconto {fmt_kr(d.aconto)}" if d.aconto else "") + total)
@@ -99,12 +102,8 @@ def message(site, url, title, area, d, flags, application, mail_to=None):
     if flags:
         lines.append("Tjek selv: " + ", ".join(flags))
     lines += ["", f"Udlejer: {site.name}", url, ""]
-    if site.name in forms.FORMS and forms.ready():
-        lines.append("🤖 Jeg udfylder udlejerens formular automatisk og skriver, når den er sendt.")
-    elif mail_to and mailer.configured():
-        lines.append(f"🤖 Jeg søger automatisk på mail til {mail_to} og skriver, når det er sendt.")
-    elif mail_to:
-        lines.append(f"Søg på mail til {mail_to} (eller sæt Gmail op, så søger jeg automatisk).")
+    if mail_to:
+        lines.append(f"Søg på mail til {mail_to}.")
     else:
         lines.append(site.how_to_apply)
     lines += ["", "Ansøgning (kopiér):", "", application]
@@ -119,53 +118,6 @@ async def fetch_text(page, url, wait_ms):
         pass
     await page.wait_for_timeout(wait_ms)
     return await page.inner_text("body")
-
-
-async def submit_form(site, page, url, title, application, state, chat_id, dry_run):
-    """Udfyld udlejerens formular. I dry run udfyldes den kun, så felterne kan tjekkes uden at sende noget."""
-    try:
-        result = await forms.FORMS[site.name](page, url, application, submit=not dry_run)
-    except Exception as e:
-        traceback.print_exc()
-        print("  formular fejlede:", e)
-        if not dry_run:
-            state["matches"][url]["applied"] = "fejl"
-            telegram.send(chat_id, f"⚠️ Kunne ikke udfylde {site.name}s formular for {title} ({type(e).__name__}). Søg gerne selv: {url}")
-        return
-    print("  formular:", result)
-    if not dry_run:
-        state["matches"][url]["applied"] = datetime.now(timezone.utc).isoformat(timespec="minutes")
-        telegram.send(chat_id, f"✅ Søgt automatisk: {title}\nFormularen hos {site.name} er sendt.\n{url}")
-
-
-def apply_pending(state, chat_id):
-    """Send ansøgning på mail til fundne boliger, der ikke er søgt endnu."""
-    if not mailer.configured():
-        return
-    sent = 0
-    for url, m in state.get("matches", {}).items():
-        if m.get("applied") or not m.get("mail_to") or sent >= MAX_APPLY_PER_RUN:
-            continue
-        body = render(m["title"], m["area"], Details(dishwasher=m.get("dishwasher"), washer=m.get("washer")))
-        body += f"\n\n(Annonce: {url})"
-        try:
-            mailer.send(m["mail_to"], f"Ansøgning om lejligheden {m['title']}", body)
-        except (smtplib.SMTPAuthenticationError, smtplib.SMTPServerDisconnected) as e:
-            # login til Gmail fejler: ansøgningerne venter, til adgangskoden er rettet, og Magnus får kun besked én gang
-            traceback.print_exc()
-            if not state.get("mail_login_error"):
-                state["mail_login_error"] = True
-                telegram.send(chat_id, "⚠️ Jeg kan ikke logge ind på Gmail, så mail-ansøgninger venter. Secret GMAIL_APP_PASSWORD skal være en app-adgangskode på 16 bogstaver, ikke din normale adgangskode.")
-            return
-        except Exception as e:
-            traceback.print_exc()
-            telegram.send(chat_id, f"⚠️ Kunne ikke sende ansøgning til {m['mail_to']} for {m['title']} ({type(e).__name__}). Søg gerne selv: {url}")
-            m["applied"] = "fejl"
-            continue
-        m["applied"] = datetime.now(timezone.utc).isoformat(timespec="minutes")
-        state.pop("mail_login_error", None)
-        sent += 1
-        telegram.send(chat_id, f"✅ Søgt automatisk: {m['title']}\nMail sendt til {m['mail_to']} (kopi i din indbakke).\n{url}")
 
 
 async def run(dry_run=False, forget=()):
@@ -188,7 +140,6 @@ async def run(dry_run=False, forget=()):
     now = datetime.now(timezone.utc).isoformat(timespec="minutes")
     slot = int(datetime.now(timezone.utc).timestamp() // 600)  # nummeret på det aktuelle 10-minutters vindue
     found = 0
-    applied_now = 0
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         ctx = await browser.new_context(locale="da-DK", user_agent=(
@@ -229,23 +180,17 @@ async def run(dry_run=False, forget=()):
                     continue
                 found += 1
                 title = site.title(card, url)
-                use_form = site.name in forms.FORMS and forms.ready()
-                mail_to = mailer.pick_recipient(text) if site.apply_email and not use_form else None
+                mail_to = mailer.pick_recipient(text) if site.apply_email else None
                 state.setdefault("matches", {})[url] = {
                     "site": site.name, "title": title, "area": area[1], "found": now, "mail_to": mail_to,
-                    "dishwasher": d.dishwasher, "washer": d.washer, "applied": None}
+                    "dishwasher": d.dishwasher, "washer": d.washer}
                 application = render(title, area[1], d)
                 msg = message(site, url, title, area, d, flags, application, mail_to)
                 if dry_run or not chat_id:
                     print(msg)
                 else:
                     telegram.send(chat_id, msg)
-                if use_form and (applied_now < MAX_APPLY_PER_RUN or dry_run):
-                    applied_now += 1
-                    await submit_form(site, page, url, title, application, state, chat_id, dry_run)
         await browser.close()
-    if not dry_run and chat_id:
-        apply_pending(state, chat_id)
     if not dry_run:
         save_state(state)
     print(f"Færdig: {found} nye relevante lejligheder")
