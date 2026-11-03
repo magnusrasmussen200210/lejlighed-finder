@@ -1,9 +1,9 @@
 # Lejlighed Finder
 
-Tjekker udlejernes egne hjemmesider hvert 10. minut (GitHub Actions) for nye lejligheder i Aarhus, der passer til Ida og Magnus, og sender dem på Telegram med en færdig ansøgning.
+Tjekker udlejernes egne hjemmesider hvert 10. minut (GitHub Actions) for nye lejligheder i Aarhus, der passer til Ida og Magnus, og sender dem på Telegram med en færdig ansøgning, som Magnus selv sender. Der søges ikke automatisk.
 
 ## Kriterier
-- Maks 10.000 kr/md inkl. aconto
+- Maks 10.000 kr/md inkl. aconto (op til 1.000 kr over sendes også, men markeres med ⚠️)
 - Område: 1) Trøjborg, 2) Frederiksbjerg, 3) Aarhus C (8000)
 - Mindst 2 værelser og 45 m²
 - Helst ubegrænset lejemål; tidsbegrænset under 12 mdr frasorteres

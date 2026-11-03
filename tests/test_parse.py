@@ -55,7 +55,7 @@ def test_evaluate_and_message():
     assert ok and area == (1, "Trøjborg") and flags == []
     msg = message(SITES[0], "https://x", "Herluf Trolles Gade 24 A", area, d, flags, render("Herluf Trolles Gade 24 A", area[1], d))
     assert "8.700 kr" in msg and "Trøjborg" in msg
-    assert not evaluate(text.replace("8.200", "9.800"))[0]  # over budget med aconto
+    assert not evaluate(text.replace("8.200", "10.800"))[0]  # mere end 1.000 kr over budget med aconto
 
 
 def test_newlines_and_ae():
@@ -102,3 +102,19 @@ def test_pick_recipient():
 
 def test_dac_unlimited():
     assert parse("Tidsbegrænsning: Ingen Månedlig husleje: 8.250 kr. Månedlig aconto: 600 kr.").unlimited is True
+
+
+def test_lidt_over_budget_sendes_med_advarsel():
+    from finder.main import evaluate
+    text = ("Hyggelig 2 værelses lejlighed med altan. Opvaskemaskine Ja Adresse Niels Juels Gade 73, 1. th. "
+            "Postnr. og by 8200 Aarhus Værelser 2 m2 61 m2 Husleje 9500 kr. Aconto vand 350 kr. "
+            "Aconto varme 500 kr. Forudbetalt husleje 19000 kr. Depositum 28500 kr.")
+    ok, area, d, flags = evaluate(text, "Niels Juels Gade 73 niels juels gade 73 1 th 8200 aarhus")
+    assert ok and area[1] == "Trøjborg"
+    assert "350 kr over budget" in flags
+
+
+def test_langt_over_budget_frasorteres():
+    from finder.main import evaluate
+    ok, _, _, flags = evaluate("2 værelser 61 m2 Husleje 11500 kr. Aconto varme 500 kr.", "trøjborgvej 1 8000 aarhus c")
+    assert not ok and flags == ["pris"]
