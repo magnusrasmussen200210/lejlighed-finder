@@ -93,6 +93,16 @@
    "title": "Mejlgade 70, st. tv. 8000 Aarhus C",
    "washer": false
   },
+  "https://www.laros.dk/ledige-lejemal/rudolph-wulffs-gade-4-3-tv-aarhus-c-3216": {
+   "applied": null,
+   "area": "Aarhus C",
+   "dishwasher": true,
+   "found": "2026-11-19T17:38+00:00",
+   "mail_to": "info@laros.dk",
+   "site": "Laros",
+   "title": "Rudolph Wulffs Gade 4, 3. tv. 8000 Aarhus C",
+   "washer": false
+  },
   "https://www.laros.dk/ledige-lejemal/silkeborgvej-192-2-tv-aarhus-c-3215": {
    "applied": null,
    "area": "Aarhus C",
@@ -267,6 +277,7 @@
   "https://vidarejendomme.dk/lejebolig/finderupvej-10-4-3-8000-aarhus-c-2/": "2026-10-21T14:41+00:00",
   "https://vidarejendomme.dk/lejebolig/finderupvej-10-st-6-8000-aarhus-c-2/": "2026-11-05T10:31+00:00",
   "https://vidarejendomme.dk/lejebolig/finderupvej-12-3-2-aarhus-c/": "2026-11-11T22:41+00:00",
+  "https://vidarejendomme.dk/lejebolig/finderupvej-8-3-6-8000-aarhus-c-2/": "2026-11-19T17:38+00:00",
   "https://vidarejendomme.dk/lejebolig/finderupvej-8-4-10-8000-aarhus-c-3/": "2026-11-05T18:13+00:00",
   "https://vidarejendomme.dk/lejebolig/frederiks-alle-28-depotrum/": "2026-10-17T18:40+00:00",
   "https://vidarejendomme.dk/lejebolig/henrik-hertz-vej-49-1-tv-8230-aabyhoej/": "2026-11-02T19:25+00:00",
@@ -329,6 +340,7 @@
   "https://www.heimstaden.dk/lejebolig/arresoevej-21c-2-4-8240-risskov-aarhus/": "2026-11-02T19:25+00:00",
   "https://www.heimstaden.dk/lejebolig/arresoevej-23b-1-2-8240-risskov-aarhus/": "2026-11-02T19:25+00:00",
   "https://www.heimstaden.dk/lejebolig/arresoevej-27a-2-1-8240-risskov-aarhus/": "2026-11-02T19:25+00:00",
+  "https://www.heimstaden.dk/lejebolig/arresoevej-27c-2-3-8240-risskov-aarhus/": "2026-11-19T17:38+00:00",
   "https://www.heimstaden.dk/lejebolig/arresoevej-38-1-mf-8240-risskov-aarhus/": "2026-11-02T19:25+00:00",
   "https://www.heimstaden.dk/lejebolig/borresoevej-7-4-th-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
   "https://www.heimstaden.dk/lejebolig/borresoevej-9-st-th-8240-risskov-aarhus/": "2026-10-17T18:40+00:00",
@@ -387,6 +399,7 @@
   "https://www.laros.dk/ledige-lejemal/mejlgade-70-st-tv-aarhus-c-3201": "2026-11-05T18:13+00:00",
   "https://www.laros.dk/ledige-lejemal/pontoppidansgade-7-1-tv-randers-c-3160": "2026-10-30T13:31+00:00",
   "https://www.laros.dk/ledige-lejemal/roedkloevervej-14-1-th-aarhus-n-3211": "2026-11-16T19:46+00:00",
+  "https://www.laros.dk/ledige-lejemal/rudolph-wulffs-gade-4-3-tv-aarhus-c-3216": "2026-11-19T17:38+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-1-8-horsens-3169": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-2-11-horsens-3134": "2026-10-17T18:40+00:00",
   "https://www.laros.dk/ledige-lejemal/sankt-helene-vej-9-st-1-horsens-3188": "2026-10-28T13:53+00:00",
