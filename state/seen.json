@@ -53,6 +53,16 @@
    "title": "regenburgsgade 21 1 tv 8000 aarhus",
    "washer": false
   },
+  "https://vidarejendomme.dk/lejebolig/silkeborgvej-78-3-tv-8000-aarhus-c-2/": {
+   "applied": null,
+   "area": "Aarhus C",
+   "dishwasher": true,
+   "found": "2026-11-20T15:21+00:00",
+   "mail_to": null,
+   "site": "Vidar Ejendomme",
+   "title": "Silkeborgvej 78, 3. tv., 8000 Aarhus C",
+   "washer": false
+  },
   "https://www.laros.dk/ledige-lejemal/falstersgade-48-4-th-aarhus-c-3184": {
    "applied": null,
    "area": "Aarhus C",
@@ -303,6 +313,7 @@
   "https://vidarejendomme.dk/lejebolig/roennevangen-77-8471-sabro-2/": "2026-11-12T19:12+00:00",
   "https://vidarejendomme.dk/lejebolig/rosenkrantzgade-24-1-sal-8000-aarhus-c/": "2026-11-06T18:39+00:00",
   "https://vidarejendomme.dk/lejebolig/silkeborgvej-70-3-tv-8000-aarhus-c/": "2026-10-19T14:33+00:00",
+  "https://vidarejendomme.dk/lejebolig/silkeborgvej-78-3-tv-8000-aarhus-c-2/": "2026-11-20T15:21+00:00",
   "https://vidarejendomme.dk/lejebolig/silkeborgvej-78-st-th-8000-aarhus-c-2/": "2026-11-13T15:30+00:00",
   "https://vidarejendomme.dk/lejebolig/stenvej-48-8270-hoejbjerg/": "2026-10-19T14:33+00:00",
   "https://vidarejendomme.dk/lejebolig/valdemarsgade-28b-8000-aarhus-c/": "2026-10-28T13:53+00:00",
@@ -337,7 +348,10 @@
   "https://www.findbolig.nu/da-dk/residence/53539": "2026-11-04T17:14+00:00",
   "https://www.findbolig.nu/da-dk/residence/79197": "2026-10-17T18:40+00:00",
   "https://www.findbolig.nu/da-dk/residence/79201": "2026-10-17T18:40+00:00",
+  "https://www.findbolig.nu/da-dk/residence/79247": "2026-11-20T15:21+00:00",
+  "https://www.findbolig.nu/da-dk/residence/79252": "2026-11-20T15:21+00:00",
   "https://www.findbolig.nu/da-dk/residence/79292": "2026-10-29T08:56+00:00",
+  "https://www.findbolig.nu/da-dk/residence/79328": "2026-11-20T15:21+00:00",
   "https://www.findbolig.nu/da-dk/residence/79340": "2026-10-17T18:40+00:00",
   "https://www.findbolig.nu/da-dk/residence/94913": "2026-10-28T13:53+00:00",
   "https://www.heimstaden.dk/lejebolig/arresoevej-19a-4-2-8240-risskov-aarhus/": "2026-11-02T19:25+00:00",
