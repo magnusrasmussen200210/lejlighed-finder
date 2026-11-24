@@ -103,6 +103,16 @@
    "title": "Mejlgade 70, st. tv. 8000 Aarhus C",
    "washer": false
   },
+  "https://www.laros.dk/ledige-lejemal/nordborggade-36-4-tv-aarhus-c-3218": {
+   "applied": null,
+   "area": "Aarhus C",
+   "dishwasher": true,
+   "found": "2026-11-24T14:47+00:00",
+   "mail_to": "info@laros.dk",
+   "site": "Laros",
+   "title": "Nordborggade 36, 4. tv. 8000 Aarhus C",
+   "washer": false
+  },
   "https://www.laros.dk/ledige-lejemal/rudolph-wulffs-gade-4-3-tv-aarhus-c-3216": {
    "applied": null,
    "area": "Aarhus C",
@@ -286,6 +296,7 @@
   "https://ungdomsboligaarhus.dk/lejemaal/40610093/aarhus%20v/vintervej/1-v%C3%A6relse": "2026-10-20T13:03+00:00",
   "https://ungdomsboligaarhus.dk/lejemaal/40610094/aarhus%20v/vintervej/1-v%C3%A6relse": "2026-11-05T10:31+00:00",
   "https://ungdomsboligaarhus.dk/lejemaal/40610100/aarhus%20v/vintervej/2-v%C3%A6relser": "2026-11-05T10:31+00:00",
+  "https://ungdomsboligaarhus.dk/lejemaal/41070850/aarhus%20c/gustav%20wieds%20vej/1-v%C3%A6relse": "2026-11-24T14:47+00:00",
   "https://ungdomsboligaarhus.dk/lejemaal/41424807/aarhus%20n/pr%C3%A6steager/2-v%C3%A6relser": "2026-11-12T19:12+00:00",
   "https://ungdomsboligaarhus.dk/lejemaal/45112202/solbjerg/egevangen/1-v%C3%A6relse": "2026-10-22T22:50+00:00",
   "https://ungdomsboligaarhus.dk/lejemaal/45112239/solbjerg/egevangen/1-v%C3%A6relse": "2026-11-12T19:12+00:00",
@@ -421,10 +432,12 @@
   "https://www.laros.dk/ledige-lejemal/hvidkloevervej-10-2-th-aarhus-n-3212": "2026-11-17T11:11+00:00",
   "https://www.laros.dk/ledige-lejemal/hvidkloevervej-5-2-tv-aarhus-n-3194": "2026-11-03T16:35+00:00",
   "https://www.laros.dk/ledige-lejemal/hvidkloevervej-9-1-tv-aarhus-n-3207": "2026-11-11T08:08+00:00",
+  "https://www.laros.dk/ledige-lejemal/ingerslevs-boulevard-24-1-th-aarhus-c-3219": "2026-11-24T14:47+00:00",
   "https://www.laros.dk/ledige-lejemal/jernbanegade-14-b-1-th-hjoerring-3130": "2026-10-19T06:41+00:00",
   "https://www.laros.dk/ledige-lejemal/jordbrovej-18-st-th-aarhus-n-1685": "2026-11-12T11:43+00:00",
   "https://www.laros.dk/ledige-lejemal/kildebjergs-agre-118-bjaeverskov-3175": "2026-10-22T10:32+00:00",
   "https://www.laros.dk/ledige-lejemal/mejlgade-70-st-tv-aarhus-c-3201": "2026-11-05T18:13+00:00",
+  "https://www.laros.dk/ledige-lejemal/nordborggade-36-4-tv-aarhus-c-3218": "2026-11-24T14:47+00:00",
   "https://www.laros.dk/ledige-lejemal/pontoppidansgade-7-1-tv-randers-c-3160": "2026-10-30T13:31+00:00",
   "https://www.laros.dk/ledige-lejemal/roedkloevervej-14-1-th-aarhus-n-3211": "2026-11-16T19:46+00:00",
   "https://www.laros.dk/ledige-lejemal/rudolph-wulffs-gade-4-3-tv-aarhus-c-3216": "2026-11-19T17:38+00:00",
